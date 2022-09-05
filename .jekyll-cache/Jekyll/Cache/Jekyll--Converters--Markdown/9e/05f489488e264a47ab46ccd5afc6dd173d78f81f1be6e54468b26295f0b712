@@ -1,0 +1,16 @@
+I"‘<p>This post is just to test Rust syntax highlighting on GitHub page.
+Here is a valid syntax in Rust.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">lambda</span> <span class="o">=</span> <span class="p">||</span> <span class="p">||</span> <span class="p">||</span> <span class="s">"Hello, World!"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Letâ€™s try with main() function.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span>
+        <span class="s">"{}"</span><span class="p">,</span>
+        <span class="p">(||</span> <span class="p">||</span> <span class="p">||</span> <span class="p">||</span> <span class="p">||</span> <span class="p">||</span> <span class="p">||</span>  <span class="s">"Hello, World!"</span><span class="p">)()()()()()()()</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

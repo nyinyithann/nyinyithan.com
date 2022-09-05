@@ -1,0 +1,44 @@
+I"�
+<p>In this post, I’ll describe how I configured NeoVim in Lua for OCaml development.
+First of all, NeoVim and OCaml need to be installed. Please check out the following links if you haven’t already installed them.</p>
+<ul>
+  <li>NeoVim: <a href="https://github.com/neovim/neovim/wiki/Installing-Neovim">https://github.com/neovim/neovim/wiki/Installing-Neovim</a></li>
+  <li>OCaml: <a href="https://ocaml.org/docs/up-and-running">https://ocaml.org/docs/up-and-running</a></li>
+</ul>
+
+<p>The following OCaml packages are necessary to be installed.</p>
+<ul>
+  <li><a href="https://opam.ocaml.org/packages/ocaml-lsp-server/">ocaml-lsp-server</a></li>
+  <li><a href="https://opam.ocaml.org/packages/ocamlformat/">ocamlformat</a></li>
+  <li><a href="https://opam.ocaml.org/packages/ocamlformat-rpc/">ocamlformat-rpc</a>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opam <span class="nb">install </span>ocaml-lsp-server
+opam <span class="nb">install </span>ocamlformat
+opam <span class="nb">install </span>ocamlformat-rpc
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="basic-lua">Basic Lua</h3>
+<p>Lua will be used for the setup and basic knowledge of it will be helpful. You can skipt this section if you’re already familiar with Lua.</p>
+
+<p><strong>Types and variable</strong>
+Lua has the following types:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">**nil**</code> — represents the absence of a useful value</li>
+  <li><strong>boolean</strong> — true and false</li>
+  <li><strong>number</strong> — double-precision floating-point numbers</li>
+  <li><strong>string</strong> — immutable sequence of bytes</li>
+  <li><strong>table</strong> — associative arrays</li>
+  <li><strong>userdata</strong> — pointer to a block of raw memory</li>
+  <li><strong>thread</strong> —  represents independent threads of execution</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">userdata</code> and <code class="language-plaintext highlighter-rouge">thread</code> are not used in this setup.</p>
+
+<p>Lua has global and local variables. <code class="language-plaintext highlighter-rouge">nil</code> is the default vaue of any non-initialized variables.</p>
+<div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1">-- local variable</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1">-- here y is global variable</span>
+<span class="kd">local</span> <span class="n">z</span> <span class="c1">-- z is nil</span>
+</code></pre></div></div>
+
+:ET

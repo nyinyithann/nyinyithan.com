@@ -1,0 +1,10 @@
+I"�<p>In this post, I’ll describe how I configured NeoVim in Lua for OCaml development.
+First of all, NeoVim and OCaml need to be installed. Please check out the following links if you haven’t already installed them.</p>
+<ul>
+  <li>NeoVim: <a href="https://github.com/neovim/neovim/wiki/Installing-Neovim">https://github.com/neovim/neovim/wiki/Installing-Neovim</a></li>
+  <li>OCaml: <a href="https://ocaml.org/docs/up-and-running">https://ocaml.org/docs/up-and-running</a>
+<br />
+The following OCaml tools are necessary to be installed too.</li>
+  <li><a href="https://github.com/ocaml/ocaml-lsp">OCaml langauge server</a>: <code class="language-plaintext highlighter-rouge">opam install ocaml-lsp-server</code></li>
+</ul>
+:ET
