@@ -9,7 +9,7 @@ In this post, I'll describe how I configured NeoVim in Lua for OCaml development
 
 <img src="{{ site.baseurl }}/assets/nvimsetup/main.jpg" alt="drawing" height="500"/>
 
-First of all, the followings need to be installed.
+First, the followings has to be installed.
 
 - <a href="https://github.com/neovim/neovim/wiki/Installing-Neovim" target="_blank"> 📝 NeoVim Installation</a> ( NeoVim >= 0.7  should be installed.)
 - <a href="https://www.nerdfonts.com" target="_blank">  🔠 Nerd Fonts</a>  Installation script [here](https://github.com/ronniedroid/getnf).
@@ -83,7 +83,7 @@ print(tbl["name"]) --> "Neo"
 ```
 
 Lua has a function called `'require'` which can be used to load libraries or modules.
-Let's say I have a file called `'utilities.lua'`, and I can import it into `'init.lua'` by calling `'require("utilities")'` inside it.<br/>
+Let's say I have a file called `'options.lua'`, and I can import it into `'init.lua'` by calling `'require("optionss")'` inside it.<br/>
 
 In Lua, `..` is string concatenation operator. And multi-line string is written in double square brackets.
 ```lua
@@ -107,7 +107,8 @@ vim.cmd [[
 `'vim.cmd'` is a function, and in Lua you can call a function without parenthesis if it has only one argument which is either a literal string or a table. So `'vim.cmd "echo hello"'` is same as `'vim.cmd ("echo hello")'` or `'vim.cmd [[echo hello]]'`.
 
 ### Folder structure
-By default, Nvim's user-specific configuration file is located at `'~/.config/nvim/init.lua'` and it will be loaded everytime Nvim starts. The folder structure of my configurations is as below. Basic configuration files are in `'nvim/lua'` folder. All the plugin configurations are in `'nvim/after/plugin'` and they are loaded by Nvim automatically. 
+By default, Nvim's user-specific configuration file is located at `'~/.config/nvim/init.lua'` and is automatically loaded by Nvim everytime it starts. I have organized my configurations in the following folder structure. Basic configuration files are located in `'nvim/lua'` folder. All the plugin configurations are located in `'nvim/after/plugin'` and are automatically loaded by Nvim. 
+
 ```
 nvim
 ├── after
@@ -141,14 +142,14 @@ require("autocommands")
 require("colorscheme")
 require("plugins")
 ```
-`'options.lua'` contains Nvim option setttings. You can check out my settings at <a href="https://github.com/nyinyithann/dotfiles/blob/main/mac/nvim_lua/lua/options.lua" target="_blank">options.lua.</a><br/>
-`'disable.lua'` disables some built-in features I don't need. More at <a href="https://github.com/nyinyithann/dotfiles/blob/main/mac/nvim_lua/lua/disable.lua" target="_blank">disable.lua.</a><br/>
-`'maps.lua'` is for custom key bindings. More at <a href="https://github.com/nyinyithann/dotfiles/blob/main/mac/nvim_lua/lua/maps.lua" target="_blank">maps.lua.</a><br/>
-I define some autocommands in <a href="https://github.com/nyinyithann/dotfiles/blob/main/mac/nvim_lua/lua/autocommands.lua" target="_blank">autocommands.lua</a>. An autocommand executes vim actions in response to an event.<br/>
-I set the theme in <a href="" target="_blank">colorscheme.lua</a>. I am using `'catppuccin'` theme.
+`'options.lua'` contains Nvim option setttings. You can check out my settings at <a href="https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/lua/options.lua" target="_blank">options.lua.</a><br/>
+`'disable.lua'` disables some built-in features I don't need. More at <a href="https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/lua/disable.lua" target="_blank">disable.lua.</a><br/>
+`'maps.lua'` is for custom key bindings. More at <a href="https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/lua/maps.lua" target="_blank">maps.lua.</a><br/>
+I define some autocommands in <a href="https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/lua/autocommands.lua" target="_blank">autocommands.lua</a>. An autocommand executes vim actions in response to an event.<br/>
+I set the theme in <a href="https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/lua/colorscheme.lua" target="_blank">colorscheme.lua</a>. I am using `'catppuccin'` theme.
 
 ### Plugin manager
-I use <a href="https://github.com/wbthomason/packer.nvim" target="_blank">packer</a> for plugin management. Plugin management settings is configured in `'lua/plugins.lua'` as below. You may copy the following into your `'plugins.lua'` file, save it, close and reopen Nvim, and Packer will be installed. Then Packer will sync all the plugins mentioned in the function passed to `'packer.startup'`. You will see a popup dialog when Packer is installing plugins. You need to press 'q' to close the popup when the installation is done. Everytime you add a new plugin or remove an existing one from `'plugins.lua'`, Packer will automatically install or remove the plugin as soon as you save the file. 
+I use <a href="https://github.com/wbthomason/packer.nvim" target="_blank">packer</a> for plugin management. Plugin management settings are configured in `'lua/plugins.lua'` as below. You may copy the following into your `'plugins.lua'` file, save it, close and reopen Nvim, and it will install Packer. Then Packer will sync all the plugins mentioned in the function passed to `'packer.startup'`. You will see a popup dialog while Packer is installing plugins. You need to press 'q' to close the popup when the installation is done. Everytime you add a new plugin or remove an existing one from `'plugins.lua'`, Packer will automatically install or remove the plugin as soon as you save the file. 
 ```lua
 -- plugins.lua 
 
@@ -195,44 +196,49 @@ packer.init({
 packer.startup(function(use)
     -- packer can manage itself!
     use "wbthomason/packer.nvim"
+
     -- nvim-tree file explorer
     use {
         "kyazdani42/nvim-tree.lua",
         requires = { "kyazdani42/nvim-web-devicons" }
     }
+
+    -- lsp config
+    use { "neovim/nvim-lspconfig", tag = "v0.1.3" }
+
+    -- colorscheme
+    use { "catppuccin/nvim", as = "catppuccin" }
+
+    -- autocompletion
+    use "hrsh7th/nvim-cmp"
+    use "hrsh7th/cmp-nvim-lsp"
+    use "hrsh7th/cmp-buffer"
+    use "saadparwaiz1/cmp_luasnip"
+
+    -- snippet
+    use "L3MON4D3/LuaSnip"
+
+    -- symbol
+    use "simrat39/symbols-outline.nvim"
+
     -- statusbar
     use {
         "nvim-lualine/lualine.nvim",
         requires = { "kyazdani42/nvim-web-devicons", opt = true }
     }
+
     -- bufferline
     use { "akinsho/nvim-bufferline.lua", tag = "v2.7.0" }
-    -- colorscheme
-    use { "catppuccin/nvim", as = "catppuccin" }
-    -- lsp config
-    use { "neovim/nvim-lspconfig", tag = "v0.1.3" }
- 		-- treesitter
+
+    -- treesitter
     use {
         "nvim-treesitter/nvim-treesitter",
         run = function() require("nvim-treesitter.install").update({ with_sync = true }) end,
     }
-    -- autocompletion
-    use "hrsh7th/nvim-cmp"
-    use "hrsh7th/cmp-nvim-lsp"
-    use "hrsh7th/cmp-buffer"
-    use "hrsh7th/cmp-nvim-lsp-signature-help"
-    use "hrsh7th/cmp-path"
-    use "hrsh7th/cmp-nvim-lua"
-    use "saadparwaiz1/cmp_luasnip"
-    use "rafamadriz/friendly-snippets"
-    -- snippet
-    use "L3MON4D3/LuaSnip"
-    -- symbol
-    use "simrat39/symbols-outline.nvim"
-		-- indentation guides
+
+    -- indentation guides
     use "lukas-reineke/indent-blankline.nvim"
-    -- terminal
-    use { "akinsho/toggleterm.nvim", tag = "v2.*" }
+
     -- Automatically run packer.clean() followed by packer.update() after cloning packer.nvim
     -- Put this at the end after all plugins
     if PACKER_BOOTSTRAP then
@@ -242,13 +248,13 @@ end)
 ```
 
 ### Nvim-tree, Lualine, Bufferline
-I am using `'nvim-tree'` for file explorer, `'lualine'` for status bar, and `'bufferline'` for showing opening buffer names and buffer/tab management. My configurations for them can be found at [nvim-tree](), [lualine](), [bufferline]().  You may also have a look at my [catppuccin theme configuration]() for integration with `nvim-tree` and `bufferline`. Based on my configuration, i will get Nvim looking like this.
+I am using `'nvim-tree'` for file explorer, `'lualine'` for status bar, and `'bufferline'` for showing opening buffer names and buffer/tab management. My configurations for them can be found at [nvim-tree](https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/after/plugin/tree.lua), [lualine](https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/after/plugin/lualine.lua), [bufferline](https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/after/plugin/bufferline.lua).  You may also have a look at my [catppuccin theme configuration](https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/after/plugin/catppuccin.lua) for integration with `nvim-tree` and `bufferline`. Based on my configuration, i will get Nvim looking like this.
 
 <img src="{{ site.baseurl }}/assets/nvimsetup/explore-status-tab.jpg" alt="drawing" width="600" height="500"/>
 
 ### Configuring Language Server Client
 
-Nvim provides a language server protocol (LSP) client.  I use `'lspconfig'` plugin to configure the client to consume services from OCaml language server. Basically the setup is something like below. You may check out the complete configuration of [my lspconfig here]().
+Nvim provides a language server protocol (LSP) client.  I use `'lspconfig'` plugin to configure the client to consume services from OCaml language server. Basically the setup is something like below. You may check out the complete configuration of [my lspconfig here](https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/after/plugin/lspconfig.lua).
 
 ```lua
 -- lspconfig.lua
@@ -326,13 +332,13 @@ lsp.ocamllsp.setup({
 })
 ```
 
-With the configuration, I would get Nvim looking like below when i open OCaml project.
+With the configuration, I would get Nvim looking like below when i open an OCaml project.
 
 <img src="{{ site.baseurl }}/assets/nvimsetup/ocamlsp.jpg" alt="drawing" width="600" height="500"/>
 
 ### Autocomplete
 
-I am using `'nvim-cmp'` for autocompletion. `'vim-cmp'` needs a snippet source otherwise it might throw error sometimes. I use `'luasnip'` for snippet engine and you might notice it's already added into `'plugins.lua'` file. The following is the configuration of `'vim-cmp'`. You may also have a look at [cmp.lua]().
+I am using `'nvim-cmp'` for autocompletion. `'nvim-cmp'` needs a snippet source otherwise it might throw error sometimes. I use `'luasnip'` for snippet engine and you might notice it's already added into `'plugins.lua'` file. The following is the configuration of `'nvim-cmp'`. You may also have a look at [cmp.lua](https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/after/plugin/cmp.lua).
 
 ```lua
 -- cmp.lua
@@ -493,12 +499,12 @@ ts.setup {
 }
 ```
 
-For indentation line and symbol outline, i use `'indent-blankline'` and `'symbols-outline'` plugin. Please check out [indentation.lua]() and [symbols.lua]() for the configuration. The configruations give me Nvim looking like this:
+For indentation line and symbol outline, i use `'indent-blankline'` and `'symbols-outline'` plugin. Please check out [indentation.lua](https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/after/plugin/indentation.lua) and [symbols.lua](https://github.com/nyinyithann/neovim-ocaml/blob/main/nvim/after/plugin/symbols.lua) for the configuration. The configruations give me Nvim looking like this:
 
 <img src="{{ site.baseurl }}/assets/nvimsetup/treesitter.jpg" alt="drawing" width="600" height="400"/>
 
 The GitHub repo related to this post is [here](https://github.com/nyinyithann/neovim-ocaml).
 
-Or If you want to check out my Nvim setup for OCaml, Rust, Rescript, JavaScript, TypeScript, and TailwindCSS, plese have a look at [here](https://github.com/nyinyithann/dotfiles/tree/main/mac/nvim_lua).
+Or If you want to check out my Nvim setup for OCaml, Rust, Rescript, JavaScript, TypeScript, and TailwindCSS, please have a look at [this](https://github.com/nyinyithann/dotfiles/tree/main/mac/nvim_lua).
 
 Thank you for reading the post.
